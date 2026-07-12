@@ -17,6 +17,9 @@ usage() {
     "  preview                  本地预览生产版本" \
     "  new <文件名> [文章标题]   新建 Markdown 文章" \
     "  publish [提交说明]        构建、提交并推送到 GitHub" \
+    "  auto-install              启用每小时自动发布" \
+    "  auto-status               查看自动发布状态" \
+    "  auto-remove               停用每小时自动发布" \
     "  status                   查看 Git 和最近部署状态" \
     "  help                     显示这份帮助" \
     "" \
@@ -96,6 +99,15 @@ case "$command" in
     git commit -m "$message"
     git push origin main
     printf '发布已触发：%s\n' 'https://bellabiu888.github.io/bella_blogs/'
+    ;;
+  auto-install)
+    ./auto_publish.sh install
+    ;;
+  auto-status)
+    ./auto_publish.sh status
+    ;;
+  auto-remove)
+    ./auto_publish.sh uninstall
     ;;
   status)
     git status --short --branch

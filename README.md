@@ -227,6 +227,30 @@ http://localhost:4321/bella_blogs/
 ./run.sh help        # 查看所有命令
 ```
 
+## 每小时自动发布
+
+启用后，电脑会每小时检查一次 `src/content/blog/` 中的文章和 `public/images/` 中的图片。检测到变化时，会先检查博客，再自动提交并上传。电脑关机或休眠时不会运行，唤醒后会继续。
+
+只需运行一次：
+
+```bash
+./run.sh auto-install
+```
+
+查看任务是否启用：
+
+```bash
+./run.sh auto-status
+```
+
+不再需要自动发布时运行：
+
+```bash
+./run.sh auto-remove
+```
+
+运行记录保存在 `logs/auto-publish.log`。如果文章格式有错，自动发布会停止本次上传，并把错误写入 `logs/auto-publish-error.log`，修正后等待下一次检查即可。
+
 ## 九、常见问题
 
 ### 提示“文件名只能包含小写字母、数字和连字符”
