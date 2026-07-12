@@ -5,8 +5,8 @@
 ## 本地预览
 
 ```bash
-npm install
-npm run dev
+./run.sh install
+./run.sh dev
 ```
 
 浏览器访问终端显示的地址。生产构建使用 `npm run build`。
@@ -29,11 +29,11 @@ draft: false
 
 设置 `draft: true` 可暂时隐藏文章。提交并推送到 `main` 后，GitHub Actions 会自动发布。
 
-## 首次启用 GitHub Pages
+也可以用脚本创建和发布文章：
 
-1. 进入仓库的 **Settings → Pages**。
-2. 在 **Build and deployment → Source** 中选择 **GitHub Actions**。
-3. 推送一次代码，等待 Actions 中的部署任务完成。
-4. 访问 <https://bellabiu888.github.io/bella_blogs/>。
+```bash
+./run.sh new my-new-post "文章标题"
+./run.sh publish "新增文章：文章标题"
+```
 
-站点标题、描述和部署地址在 `astro.config.mjs` 与 `src/layouts/BaseLayout.astro` 中修改。
+运行 `./run.sh help` 可以查看全部常用命令。
