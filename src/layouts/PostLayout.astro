@@ -1,0 +1,22 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+const { title, description, pubDate, updatedDate, tags = [] } = Astro.props;
+const base = `${import.meta.env.BASE_URL}/`;
+const formatter = new Intl.DateTimeFormat('zh-CN', { dateStyle: 'long' });
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="post">
+    <a class="back-link" href={base}>← 返回所有文章</a>
+    <header class="post-header">
+      {tags.length > 0 && <p class="eyebrow">{tags.join(' · ')}</p>}
+      <h1>{title}</h1>
+      <p class="post-meta">
+        <time datetime={pubDate.toISOString()}>{formatter.format(pubDate)}</time>
+        {updatedDate && <span> · 更新于 {formatter.format(updatedDate)}</span>}
+      </p>
+    </header>
+    <div class="post-content"><slot /></div>
+  </article>
+</BaseLayout>

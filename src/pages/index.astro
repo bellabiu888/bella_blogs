@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const base = `${import.meta.env.BASE_URL}/`;
+const monthDay = new Intl.DateTimeFormat('zh-CN', { month: '2-digit', day: '2-digit' });
+---
+
+<BaseLayout>
+  <section class="hero">
+    <p class="eyebrow">HELLO, I'M BELLA</p>
+    <h1>在代码与生活之间，<br /><em>留下一些痕迹。</em></h1>
+    <p class="hero-copy">这里记录技术实践、生活观察，以及那些值得慢慢想清楚的问题。</p>
+  </section>
+  <section class="post-list" aria-labelledby="latest-posts">
+    <div class="section-heading"><h2 id="latest-posts">最近文章</h2><span>{posts.length} 篇</span></div>
+    {posts.map((post) => (
+      <article class="post-card">
+        <div class="post-card-date"><span>{monthDay.format(post.data.pubDate).replace('/', '.')}</span><small>{post.data.pubDate.getFullYear()}</small></div>
+        <div>
+          <p class="card-tags">{post.data.tags.join(' / ')}</p>
+          <h3><a href={`${base}posts/${post.id}/`}>{post.data.title}</a></h3>
+          <p>{post.data.description}</p>
+        </div>
+        <a class="card-arrow" href={`${base}posts/${post.id}/`} aria-label={`阅读《${post.data.title}》`}>↗</a>
+      </article>
+    ))}
+  </section>
+</BaseLayout>
